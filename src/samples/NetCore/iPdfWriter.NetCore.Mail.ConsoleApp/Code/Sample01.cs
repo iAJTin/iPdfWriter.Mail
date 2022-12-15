@@ -29,8 +29,8 @@ namespace iPdfWriter.Net.Mail.ConsoleApp.Code
             var sendResult = pdfCreationResult.Result.Action(new SendMail
             {
                 AttachedFilename = "Sample-01",
-                FromDisplayName = "Fernando",
-                FromAddress = "fdo.garcia.vega@gmail.com",
+                FromDisplayName = "",
+                FromAddress = "",
                 Settings = new SmtpMailSettings
                 {
                     Credential = new SmtpCredential
@@ -38,19 +38,19 @@ namespace iPdfWriter.Net.Mail.ConsoleApp.Code
                         Port = 465,
                         UseSsl = true,
                         Host = SmtpMail.GmailSmtpHost,
-                        Email = "fdo.garcia.vega@gmail.com",
-                        UserName = "fdo.garcia.vega@gmail.com",
-                        Password = "xnhmzawaqczajoya"
+                        Email = "",
+                        UserName = "",
+                        Password = ""
                     },
                     Templates = new TemplateSettings
                     {
                         IsBodyHtml = true,
-                        BodyTemplate = "Hola",
+                        BodyTemplate = "Hey!!!",
                         SubjectTemplate = "Test > pdf file"
                     },
                     Recipients = new RecipientsSettings
                     {
-                        ToAddresses = new[] { "fernando.garcia@col.vueling.com" }
+                        ToAddresses = new[] { "" }
                     },
                     Attachments = new[]
                     {

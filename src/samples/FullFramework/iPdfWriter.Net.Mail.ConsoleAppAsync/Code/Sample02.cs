@@ -35,8 +35,8 @@ namespace iPdfWriter.Net.Mail.ConsoleApp.Code
             var sendResult = await pdfCreationResult.Result.Action(new SendMailAsync
                 {
                     AttachedFilename = "Sample-01",
-                    FromDisplayName = "Fernando",
-                    FromAddress = "fdo.garcia.vega@gmail.com",
+                    FromDisplayName = "",
+                    FromAddress = "",
                     Settings = new SmtpMailSettings
                     {
                         Credential = new SmtpCredential
@@ -44,9 +44,9 @@ namespace iPdfWriter.Net.Mail.ConsoleApp.Code
                             Port = 2525,
                             UseSsl = true,
                             Host = SmtpMail.MailtrapSmtpHost,
-                            Email = "fdo.garcia.vega@gmail.com",
-                            UserName = "668aa4b2008e20",
-                            Password = "b374b7eb13c0f8"
+                            Email = "",
+                            UserName = "",
+                            Password = ""
                         },
                         Templates = new TemplateSettings
                         {
@@ -56,7 +56,7 @@ namespace iPdfWriter.Net.Mail.ConsoleApp.Code
                         },
                         Recipients = new RecipientsSettings
                         {
-                            ToAddresses = new[] { "fernando.garcia@col.vueling.com" }
+                            ToAddresses = new[] { "" }
                         },
                         Attachments = new[]
                         {
