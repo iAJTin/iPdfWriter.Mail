@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.0] - 2022-12-15
+## [1.0.1] - 2022-12-15
 
 ### Added
 
@@ -20,4 +20,4 @@ All notable changes to this project will be documented in this file.
 	| iTin.Registry.Windows | 1.0.0.3 | Windows registry access |
 
 
-[1.0.0]: https://github.com/iAJTin/iPdfWriter.Mail/releases/tag/v1.0.0
+[1.0.0]: https://github.com/iAJTin/iPdfWriter.Mail/releases/tag/v1.0.1
