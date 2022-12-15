@@ -1,17 +1,17 @@
 ﻿
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
-using System.Net.Mail;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 
 using iTin.Core.ComponentModel;
 using iTin.Core.ComponentModel.Results;
-
 using iTin.Core.Helpers;
+
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
 
 namespace iTin.Mail.Smtp.Net
 {
@@ -20,6 +20,25 @@ namespace iTin.Mail.Smtp.Net
     /// </summary>
     public class SmtpMail
     {
+        #region public constants
+
+        /// <summary>
+        /// <strong>gmail</strong> smtp host
+        /// </summary>
+        public const string GmailSmtpHost = "smtp.gmail.com";
+
+        /// <summary>
+        /// <strong>ethereal</strong> smtp host
+        /// </summary>
+        public const string EtherealSmtpHost = "smtp.ethereal.email";
+
+        /// <summary>
+        /// <strong>mailtrap</strong> smtp host
+        /// </summary>
+        public const string MailtrapSmtpHost = "smtp.mailtrap.io";
+
+        #endregion
+
         #region private readonly fields
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -56,35 +75,57 @@ namespace iTin.Mail.Smtp.Net
         /// The type of the return value is <see cref="bool"/>, which contains the operation result
         /// </para>
         /// </returns>
-        public IResult SendMail(MailMessage message)
+        public IResult SendMail(MimeMessage message)
         {
-            SentinelHelper.ArgumentNull(message, nameof(message));         
+            SentinelHelper.ArgumentNull(message, nameof(message));
 
-            using (var client = new SmtpClient(_settings.Credential.Host, _settings.Credential.Port))
+            var hostIsEmpty = string.IsNullOrEmpty(_settings.Credential.Host);
+            if (hostIsEmpty)
             {
-                client.EnableSsl = _settings.Credential.UseSsl;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-
-                bool userNameIsEmpty = string.IsNullOrEmpty(_settings.Credential.UserName);
-                if (!userNameIsEmpty)
-                {
-                    client.Credentials = new NetworkCredential(_settings.Credential.UserName, _settings.Credential.Password, _settings.Credential.Domain);
-                }
-
-                try
-                {
-                    client.Send(message);
-                }
-                catch(Exception ex)
-                {
-                    BooleanResult.FromException(ex);
-                }
-
-                message.Dispose();
+                return BooleanResult.CreateErrorResult("Host can not be empty");
             }
 
-            return BooleanResult.SuccessResult;
+            using var smtp = new SmtpClient();
+
+            var canUseSecureSocket = CanUseSecureSocket(_settings.Credential.Host.Trim());
+            if (canUseSecureSocket)
+            {
+                smtp.Connect(
+                    _settings.Credential.Host,
+                    _settings.Credential.Port,
+                    SecureSocketOptions.StartTls);
+            }
+            else
+            {
+                smtp.Connect(
+                    _settings.Credential.Host,
+                    _settings.Credential.Port,
+                    _settings.Credential.UseSsl);
+            }
+
+            var userNameIsEmpty = string.IsNullOrEmpty(_settings.Credential.UserName);
+            if (userNameIsEmpty)
+            {
+                return BooleanResult.CreateErrorResult("UserName can not be empty");
+            }
+
+            var credential = new NetworkCredential(
+                _settings.Credential.UserName,
+                _settings.Credential.Password,
+                _settings.Credential.Domain);
+            smtp.Authenticate(credential);
+
+            try
+            {
+                smtp.Send(message);
+                smtp.Disconnect(true);
+
+                return BooleanResult.SuccessResult;
+            }
+            catch (Exception e)
+            {
+                return BooleanResult.FromException(e);
+            }
         }
 
         #endregion
@@ -95,6 +136,7 @@ namespace iTin.Mail.Smtp.Net
         /// Sends mail with specified credential synchronously.
         /// </summary>
         /// <param name="message">Message to send.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>
         /// <para>
         /// A <see cref="BooleanResult"/> which implements the <see cref="IResult"/> interface reference that contains the result of the operation, to check if the operation is correct, the <b>Success</b>
@@ -105,62 +147,68 @@ namespace iTin.Mail.Smtp.Net
         /// The type of the return value is <see cref="bool"/>, which contains the operation result
         /// </para>
         /// </returns>
-        public async Task<IResult> SendMailAsync(MailMessage message)
+        public async Task<IResult> SendMailAsync(MimeMessage message, CancellationToken cancellationToken = default)
         {
             SentinelHelper.ArgumentNull(message, nameof(message));
 
-            using var client = new SmtpClient(_settings.Credential.Host, _settings.Credential.Port)
+            var hostIsEmpty = string.IsNullOrEmpty(_settings.Credential.Host);
+            if (hostIsEmpty)
             {
-                EnableSsl = _settings.Credential.UseSsl,
-                DeliveryMethod = SmtpDeliveryMethod.Network
-            };
-
-            var userNameIsEmpty = string.IsNullOrEmpty(_settings.Credential.UserName);
-            if (!userNameIsEmpty)
-            {
-                client.Credentials = new NetworkCredential(_settings.Credential.UserName, _settings.Credential.Password, _settings.Credential.Domain);
+                return BooleanResult.CreateErrorResult("Host can not be empty");
             }
 
-            ServicePointManager.ServerCertificateValidationCallback = AcceptAllCertifications;
-            client.SendCompleted += SendCompletedCallback;
+            using var smtp = new SmtpClient();
+
+            var canUseSecureSocket = CanUseSecureSocket(_settings.Credential.Host.Trim());
+            if (canUseSecureSocket)
+            {
+                await smtp.ConnectAsync(
+                    _settings.Credential.Host,
+                    _settings.Credential.Port,
+                    SecureSocketOptions.StartTls, 
+                    cancellationToken);
+            }
+            else
+            {
+                await smtp.ConnectAsync(
+                    _settings.Credential.Host,
+                    _settings.Credential.Port,
+                    _settings.Credential.UseSsl,
+                    cancellationToken);
+            }
+
+            var userNameIsEmpty = string.IsNullOrEmpty(_settings.Credential.UserName);
+            if (userNameIsEmpty)
+            {
+                return BooleanResult.CreateErrorResult("UserName can not be empty");
+            }
+
+            var credential = new NetworkCredential(
+                _settings.Credential.UserName, 
+                _settings.Credential.Password, 
+                _settings.Credential.Domain);
+            await smtp.AuthenticateAsync(credential, cancellationToken);
 
             try
             {
-                client.SendAsync(message, message);
+                await smtp.SendAsync(message, cancellationToken);
+                await smtp.DisconnectAsync(true, cancellationToken);
 
-                return await Task.FromResult(BooleanResult.SuccessResult);
+                return BooleanResult.SuccessResult;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return await Task.FromResult(BooleanResult.FromException(ex));
+                return BooleanResult.FromException(e);
             }
         }
-        
+
         #endregion
 
         #region private static methods
 
-        private static bool AcceptAllCertifications(object sender, X509Certificate certification, X509Chain chain, SslPolicyErrors sslPolicyErrors) => true;
-
-        private static void SendCompletedCallback(object sender, AsyncCompletedEventArgs e)
-        {
-            var smtp = (SmtpClient)sender;
-            var message = (MailMessage)e.UserState;
-
-            if (e.Cancelled)
-            {
-            }
-
-            if (e.Error != null)
-            {
-                // logger_.Error(e.Error.ToString());
-            }
-            else
-            {
-                smtp?.Dispose();
-                message?.Dispose();
-            }
-        }
+        private static bool CanUseSecureSocket(string host) =>
+            host.Contains("smtp.mailtrap") ||
+            host.Contains("smtp.ethereal");
 
         #endregion
     }

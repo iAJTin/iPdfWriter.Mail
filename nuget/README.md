@@ -1,6 +1,6 @@
-# What is iPdfWriter.Net.Mail?
+# What is iPdfWriter.Mail?
 
-**iPdfWriter.Net.Mail**, extends [iPdfWriter](https://github.com/iAJTin/iPdfWriter), contains extension methods to send by mail **PdfInput** instances as well as **OutputResult**.
+**iPdfWriter.Mail**, extends [iPdfWriter](https://github.com/iAJTin/iPdfWriter), contains extension methods to send by mail **PdfInput** instances as well as **OutputResult**.
 
 I hope it helps someone. :smirk:
 
@@ -56,26 +56,34 @@ if (!pdfCreationResult.Success)
 
 var sendResult = pdfCreationResult.Result.Action(new SendMail
 {
-    FromAddress = "",
-    FromDisplayName = "",
-    AttachedFilename = "",
+    FromAddress = " >> WRITE HERE EMAIL ADDRESS OF THE SENDER << ",
+    FromDisplayName = " >> WRITE HERE THE NAME TO DISPLAY << ",
+    AttachedFilename = "Sample-01", // OutputResult file name
     Settings = new SmtpMailSettings
     {
         Credential = new SmtpCredential
         {
-            Domain = "",
-            Email = "",
-            Host = "",
-            Password = "",
-            Port = 0,
-            UserName = "",
-            UseSsl = true
+            Port = 465,
+            UseSsl = true,
+            Host = SmtpMail.GmailSmtpHost, // YOU CAN ALSO USE: SmtpMail.MailtrapSmtpHost OR SmtpMail.EtherealSmtpHost, for more information, please see Sample02 and Sample03 
+            Email = " >> WRITE HERE YOUR EMAIL << ",
+            UserName = " >> WRITE HERE YOUR USERNAME << ",
+            Password = " >> WRITE HERE YOUR PASSWORD << "
         },
         Templates = new TemplateSettings
         {
-            BodyTemplate = "",
             IsBodyHtml = true,
-            SubjectTemplate = ""
+            BodyTemplate = "Hey!!!",
+            SubjectTemplate = "test pdf file"
+        },
+        Recipients = new RecipientsSettings
+        {
+            ToAddresses = new[] { " >> WRITE HERE EMAIL ADDRESS OF THE RECIPIENT << " }
+        },
+        Attachments = new[]
+        {
+            "~/Resources/Sample-01/Images/bar-chart.png",
+            "~/Resources/Sample-01/Images/image-1.jpg"
         }
     }
 });
@@ -134,26 +142,34 @@ if (!pdfCreationResult.Success)
 
 var sendResult = await pdfCreationResult.Result.Action(new SendMailAsync
 {
-    FromAddress = "",
-    FromDisplayName = "",
-    AttachedFilename = "",
+    FromAddress = " >> WRITE HERE EMAIL ADDRESS OF THE SENDER << ",
+    FromDisplayName = " >> WRITE HERE THE NAME TO DISPLAY << ",
+    AttachedFilename = "Sample-01", // OutputResult file name
     Settings = new SmtpMailSettings
     {
         Credential = new SmtpCredential
         {
-            Domain = "",
-            Email = "",
-            Host = "",
-            Password = "",
-            Port = 0,
-            UserName = "",
-            UseSsl = true
+            Port = 465,
+            UseSsl = true,
+            Host = SmtpMail.GmailSmtpHost, // YOU CAN ALSO USE: SmtpMail.MailtrapSmtpHost OR SmtpMail.EtherealSmtpHost, for more information, please see Sample02 and Sample03 
+            Email = " >> WRITE HERE YOUR EMAIL << ",
+            UserName = " >> WRITE HERE YOUR USERNAME << ",
+            Password = " >> WRITE HERE YOUR PASSWORD << "
         },
         Templates = new TemplateSettings
         {
-            BodyTemplate = "",
             IsBodyHtml = true,
-            SubjectTemplate = ""
+            BodyTemplate = "Hey!!!",
+            SubjectTemplate = "test pdf file"
+        },
+        Recipients = new RecipientsSettings
+        {
+            ToAddresses = new[] { " >> WRITE HERE EMAIL ADDRESS OF THE RECIPIENT << " }
+        },
+        Attachments = new[]
+        {
+            "~/Resources/Sample-01/Images/bar-chart.png",
+            "~/Resources/Sample-01/Images/image-1.jpg"
         }
     }
 });
@@ -166,8 +182,8 @@ if (!sendResult.Success)
 
 # Documentation
 
- - Please see next link [documentation].
+ - Please see next link [documentation](https://github.com/iAJTin/iPdfWriter.Mail/blob/main/documentation/iPdfWriter.Mail.md).
 
 # Changes
 
-For more information, please visit the next link [CHANGELOG](https://github.com/iAJTin/iPdfWriter.Net.Mail/blob/main/CHANGELOG.md)
+For more information, please visit the next link [CHANGELOG](https://github.com/iAJTin/iPdfWriter.Mail/blob/main/CHANGELOG.md)

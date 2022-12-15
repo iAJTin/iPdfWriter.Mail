@@ -1,8 +1,8 @@
 
-What is iPdfWriter.Net.Mail?
+What is iPdfWriter.Mail?
 ==============================
 
-iPdfWriter.Net.Mail, extends iPdfWriter, contains extension methods to send by mail PdfInput instances as well as OutputResult.
+iPdfWriter.Mail, extends iPdfWriter, contains extension methods to send by mail PdfInput instances as well as OutputResult.
 
 Changes in this version (v1.0.0)
 ================================
@@ -23,18 +23,20 @@ Changes in this version (v1.0.0)
     •—————————————————————————————————————————————————————————————————————————————————————————————————————————————•
     | iTin.Mail.Smtp.Net        1.0.0.0     Native SMTP mail implementation                                       |
     •—————————————————————————————————————————————————————————————————————————————————————————————————————————————•
+    | iTin.Mime                 1.0.0.0     Contains known MIME types actions                                     |
+    •—————————————————————————————————————————————————————————————————————————————————————————————————————————————•
     | iTin.Registry.Windows     1.0.0.3     Windows registry acces                                                |
     •—————————————————————————————————————————————————————————————————————————————————————————————————————————————•
 
 Install via NuGet
 =================
 
-PM> Install-Package iPdfWriter.Net.Mail
+PM> Install-Package iPdfWriter.Mail
 
-For more information, please see https://www.nuget.org/packages/iPdfWriter.Net.Mail/
+For more information, please see https://www.nuget.org/packages/iPdfWriter.Mail/
 
 
 Documentation
 =============
 
- - Please see next link https://github.com/iAJTin/iPdfWriter.Net.Mail/blob/master/documentation/iPdfWriter.Net.Mail.md
+ - Please see next link https://github.com/iAJTin/iPdfWriter.Mail/blob/master/documentation/iPdfWriter.Mail.md

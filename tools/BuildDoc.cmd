@@ -3,6 +3,6 @@ CLS
 
 rmdir ..\documentation /s /q
 
-xmldocmd ..\src\lib\iPdfWriter\iPdfWriter.Net.Mail\bin\Debug\net461\iPdfWriter.Net.Mail.dll ..\documentation
+xmldocmd ..\src\lib\iPdfWriter\iPdfWriter.Mail\bin\Debug\netstandard2.0\iPdfWriter.Mail.dll ..\documentation
 
 PAUSE

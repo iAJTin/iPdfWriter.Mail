@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="https://github.com/iAJTin/iPdfWriter.Net.Mail/blob/master/nuget/iPdfWriter.Net.Mail.png" height="32"/>
+  <img src="https://github.com/iAJTin/iPdfWriter.Mail/blob/master/nuget/iPdfWriter.Mail.png" height="32"/>
 </p>
 <p align="center">
-  <a href="https://github.com/iAJTin/iPdfWriter.Net.Mail">
-    <img src="https://img.shields.io/badge/iTin-iPdfWriter.Net.Mail-green.svg?style=flat"/>
+  <a href="https://github.com/iAJTin/iPdfWriter.Mail">
+    <img src="https://img.shields.io/badge/iTin-iPdfWriter.Mail-green.svg?style=flat"/>
   </a>
 </p>
 
 ***
 
-# What is iPdfWriter.Net.Mail?
+# What is iPdfWriter.Mail?
 
-**iPdfWriter.Net.Mail**, extends [iPdfWriter](https://github.com/iAJTin/iPdfWriter), contains extension methods to send by mail **PdfInput** instances as well as **OutputResult**.
+**iPdfWriter.Mail**, extends [iPdfWriter](https://github.com/iAJTin/iPdfWriter), contains extension methods to send by mail **PdfInput** instances as well as **OutputResult**.
 
 I hope it helps someone. :smirk:
 
@@ -22,14 +22,14 @@ I hope it helps someone. :smirk:
 <table>
   <tr>
     <td>
-      <a href="https://github.com/iAJTin/iPdfWriter.Net.Mail">
-        <img src="https://img.shields.io/badge/-iPdfWriter.Net.Mail-green.svg?style=flat"/>
+      <a href="https://github.com/iAJTin/iPdfWriter.Mail">
+        <img src="https://img.shields.io/badge/-iPdfWriter.Mail-green.svg?style=flat"/>
       </a>
     </td>
     <td>
-      <a href="https://www.nuget.org/packages/iPdfWriter.Net.Mail/">
+      <a href="https://www.nuget.org/packages/iPdfWriter.Mail/">
         <img alt="NuGet Version" 
-             src="https://img.shields.io/nuget/v/iPdfWriter.Net.Mail.svg" /> 
+             src="https://img.shields.io/nuget/v/iPdfWriter.Mail.svg" /> 
       </a>
     </td>  
   </tr>
@@ -37,7 +37,7 @@ I hope it helps someone. :smirk:
 
 - From package manager console
 
-```PM> Install-Package iPdfWriter.Net.Mail```
+```PM> Install-Package iPdfWriter.Mail```
 
 # Usage
 
@@ -91,26 +91,34 @@ if (!pdfCreationResult.Success)
 
 var sendResult = pdfCreationResult.Result.Action(new SendMail
 {
-    FromAddress = "",
-    FromDisplayName = "",
-    AttachedFilename = "",
+    FromAddress = " >> WRITE HERE EMAIL ADDRESS OF THE SENDER << ",
+    FromDisplayName = " >> WRITE HERE THE NAME TO DISPLAY << ",
+    AttachedFilename = "Sample-01", // OutputResult file name
     Settings = new SmtpMailSettings
     {
         Credential = new SmtpCredential
         {
-            Domain = "",
-            Email = "",
-            Host = "",
-            Password = "",
-            Port = 0,
-            UserName = "",
-            UseSsl = true
+            Port = 465,
+            UseSsl = true,
+            Host = SmtpMail.GmailSmtpHost, // YOU CAN ALSO USE: SmtpMail.MailtrapSmtpHost OR SmtpMail.EtherealSmtpHost, for more information, please see Sample02 and Sample03 
+            Email = " >> WRITE HERE YOUR EMAIL << ",
+            UserName = " >> WRITE HERE YOUR USERNAME << ",
+            Password = " >> WRITE HERE YOUR PASSWORD << "
         },
         Templates = new TemplateSettings
         {
-            BodyTemplate = "",
             IsBodyHtml = true,
-            SubjectTemplate = ""
+            BodyTemplate = "Hey!!!",
+            SubjectTemplate = "test pdf file"
+        },
+        Recipients = new RecipientsSettings
+        {
+            ToAddresses = new[] { " >> WRITE HERE EMAIL ADDRESS OF THE RECIPIENT << " }
+        },
+        Attachments = new[]
+        {
+            "~/Resources/Sample-01/Images/bar-chart.png",
+            "~/Resources/Sample-01/Images/image-1.jpg"
         }
     }
 });
@@ -169,26 +177,34 @@ if (!pdfCreationResult.Success)
 
 var sendResult = await pdfCreationResult.Result.Action(new SendMailAsync
 {
-    FromAddress = "",
-    FromDisplayName = "",
-    AttachedFilename = "",
+    FromAddress = " >> WRITE HERE EMAIL ADDRESS OF THE SENDER << ",
+    FromDisplayName = " >> WRITE HERE THE NAME TO DISPLAY << ",
+    AttachedFilename = "Sample-01", // OutputResult file name
     Settings = new SmtpMailSettings
     {
         Credential = new SmtpCredential
         {
-            Domain = "",
-            Email = "",
-            Host = "",
-            Password = "",
-            Port = 0,
-            UserName = "",
-            UseSsl = true
+            Port = 465,
+            UseSsl = true,
+            Host = SmtpMail.GmailSmtpHost, // YOU CAN ALSO USE: SmtpMail.MailtrapSmtpHost OR SmtpMail.EtherealSmtpHost, for more information, please see Sample02 and Sample03 
+            Email = " >> WRITE HERE YOUR EMAIL << ",
+            UserName = " >> WRITE HERE YOUR USERNAME << ",
+            Password = " >> WRITE HERE YOUR PASSWORD << "
         },
         Templates = new TemplateSettings
         {
-            BodyTemplate = "",
             IsBodyHtml = true,
-            SubjectTemplate = ""
+            BodyTemplate = "Hey!!!",
+            SubjectTemplate = "test pdf file"
+        },
+        Recipients = new RecipientsSettings
+        {
+            ToAddresses = new[] { " >> WRITE HERE EMAIL ADDRESS OF THE RECIPIENT << " }
+        },
+        Attachments = new[]
+        {
+            "~/Resources/Sample-01/Images/bar-chart.png",
+            "~/Resources/Sample-01/Images/image-1.jpg"
         }
     }
 });
@@ -205,7 +221,7 @@ if (!sendResult.Success)
 
 # How can I send feedback!!!
 
-If you have found **iPdfWriter.Net.Mail** useful at work or in a personal project, I would love to hear about it. If you have decided not to use **iPdfWriter.Net.Mail**, please send me and email stating why this is so. I will use this feedback to improve **iPdfWriter.Net.Mail** in future releases.
+If you have found **iPdfWriter.Mail** useful at work or in a personal project, I would love to hear about it. If you have decided not to use **iPdfWriter.Mail**, please send me and email stating why this is so. I will use this feedback to improve **iPdfWriter.Mail** in future releases.
 
 My email address is 
 
@@ -213,4 +229,4 @@ My email address is
 
 
 [email]: ./assets/email.png "email"
-[documentation]: ./documentation/iPdfWriter.Net.Mail.md
+[documentation]: ./documentation/iPdfWriter.Mail.md
