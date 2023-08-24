@@ -1,11 +1,10 @@
 ﻿
-namespace iPdfWriter.NetCore.Mail.ConsoleApp.ComponentModel
+namespace iPdfWriter.NetCore.Mail.ConsoleApp.ComponentModel;
+
+internal static class Constants
 {
-    internal static class Constants
-    {
-        /// <summary>
-        /// Defines app name
-        /// </summary>
-        public const string AppName = "iPdfWriter - SMTP Email";
-    }
+    /// <summary>
+    /// Defines app name
+    /// </summary>
+    public const string AppName = "iPdfWriter - SMTP Email";
 }

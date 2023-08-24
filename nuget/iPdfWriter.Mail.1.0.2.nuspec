@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>iPdfWriter.Mail</id>
+    <version>1.0.2</version>
+    <title>iPdfWriter.Mail</title>
+    <authors>iAJTin</authors>
+    <owners>iAJTin</owners>
+    <readme>.\README.md</readme>
+    <license type="expression">AGPL-3.0-only</license>
+    <projectUrl>https://github.com/iAJTin/iPdfWriter.Mail</projectUrl>
+    <icon>.\iPdfWriter.Mail.png</icon>
+    <iconUrl>https://raw.githubusercontent.com/iAJTin/iPdfWriter.Mail/master/nuget/iPdfWriter.Mail.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      iPdfWriter.Mail, extends iPdfWriter, contains extension methods to send by mail PdfInput instances as well as OutputResult
+    </description>
+    <copyright>Copyright © 2022 iAJTin</copyright>
+    <tags>PDF Writer Adobe iTin</tags>
+    <repository type="git" url="https://github.com/iAJTin/iPdfWriter.Mail"/>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="iPdfWriter.Abstractions" version="1.0.1" />
+        <dependency id="MailKit" version="4.1.0" />
+      </group>
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="iPdfWriter.Abstractions" version="1.0.1" />
+        <dependency id="MailKit" version="4.1.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\README.md" target="." />
+    <file src="..\README.txt" target="." />
+    <file src=".\iPdfWriter.Mail.png" target="." />
+    <file src="..\src\lib\bin\Debug\**" target="lib" exclude="**\*.deps.json;**\*.pdb;" />
+  </files>
+</package>

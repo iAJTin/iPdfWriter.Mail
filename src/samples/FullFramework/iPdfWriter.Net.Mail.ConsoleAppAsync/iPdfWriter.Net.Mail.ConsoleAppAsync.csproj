@@ -7,12 +7,9 @@
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <PackageReference Include="iPdfWriter" Version="1.0.6" />
-	</ItemGroup>
-
-	<ItemGroup>
-    <ProjectReference Include="..\..\..\lib\iPdfWriter\iPdfWriter.Mail\iPdfWriter.Mail.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\iPdfWriter\src\lib\iPdfWriter\iPdfWriter\iPdfWriter.csproj" />
+    <ProjectReference Include="..\..\..\lib\iPdfWriter.Mail.csproj" />
+  </ItemGroup>
 
 </Project>

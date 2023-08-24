@@ -4,8 +4,18 @@ What is iPdfWriter.Mail?
 
 iPdfWriter.Mail, extends iPdfWriter, contains extension methods to send by mail PdfInput instances as well as OutputResult.
 
-Changes in this version (v1.0.1)
+Changes in this version (v1.0.2)
 ================================
+
+· Added
+  -----
+
+  - Create project and first commit.
+
+  - Multiple Repository is used.
+
+v1.0.1
+======
 
 · Added
   -----

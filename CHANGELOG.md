@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.2 - 
+
+### Added
+
+  - Create project and first commit
+
+  - Multiple Repository is used.
+
+    In the image, I show my folder structure, in case it helps someone
+
+    ![multi-repo.png][mutli-repo] 
+
 ## [1.0.1] - 2022-12-15
 
 ### Added
@@ -20,4 +32,6 @@ All notable changes to this project will be documented in this file.
 	| iTin.Registry.Windows | 1.0.0.3 | Windows registry access |
 
 
-[1.0.0]: https://github.com/iAJTin/iPdfWriter.Mail/releases/tag/v1.0.1
+[1.0.2]: https://github.com/iAJTin/iPdfWriter.Mail/releases/tag/v1.0.2
+[1.0.1]: https://github.com/iAJTin/iPdfWriter.Mail/releases/tag/v1.0.1
+[mutli-repo]: ./assets/multi-repo.png "folder structure"
